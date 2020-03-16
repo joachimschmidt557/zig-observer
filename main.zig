@@ -19,7 +19,7 @@ pub fn main() !void {
     }
 
     const stdin = std.io.getStdIn();
-    var stdin_stream = stdin.inStream().stream;
+    var stdin_stream = stdin.inStream();
 
     while (stdin_stream.readUntilDelimiterAlloc(allocator, '\n', 1024)) |line| {
         defer allocator.free(line);
