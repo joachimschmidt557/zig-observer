@@ -1,5 +1,4 @@
 const std = @import("std");
-const ArrayList = std.ArrayList;
 const Allocator = std.mem.Allocator;
 
 const Observable = @import("observable.zig").Observable;

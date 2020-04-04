@@ -14,7 +14,7 @@ pub fn main() !void {
     // Observers
     var printers = ArrayList(*Printer).init(allocator);
     defer {
-        for (printers.toSlice()) |x| x.deinit();
+        for (printers.items) |x| x.deinit();
         printers.deinit();
     }
 
@@ -32,7 +32,7 @@ pub fn main() !void {
             try printers.append(try Printer.init(&ctr, allocator));
         } else if (std.mem.eql(u8, "d", line)) {
             // Remove an observer
-            if (printers.len > 0) {
+            if (printers.items.len > 0) {
                 printers.orderedRemove(0).deinit();
             }
         }

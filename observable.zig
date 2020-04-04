@@ -32,13 +32,13 @@ pub const Observable = struct {
     }
 
     pub fn detach(self: *Self, obs: *const Observer) void {
-        if (std.mem.indexOfScalar(*const Observer, self.observers.toSlice(), obs)) |index| {
+        if (std.mem.indexOfScalar(*const Observer, self.observers.items, obs)) |index| {
             _ = self.observers.orderedRemove(index);
         }
     }
 
     pub fn notify(self: Self) void {
-        for (self.observers.toSlice()) |obs| {
+        for (self.observers.items) |obs| {
             obs.update(obs);
         }
     }
