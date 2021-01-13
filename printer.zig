@@ -13,7 +13,7 @@ pub const Printer = struct {
 
     const Self = @This();
 
-    pub fn init(ctr: *Counter, alloc: *Allocator) !*Self {
+    pub fn create(ctr: *Counter, alloc: *Allocator) !*Self {
         var self = try alloc.create(Self);
         self.* = Self{
             .allocator = alloc,
@@ -26,8 +26,8 @@ pub const Printer = struct {
         return self;
     }
 
-    pub fn deinit(self: *Self) void {
-        var alloc = self.allocator;
+    pub fn destroy(self: *Self) void {
+        const alloc = self.allocator;
         self.counter.changed.detach(&self.observer);
         alloc.destroy(self);
     }

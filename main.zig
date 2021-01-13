@@ -14,14 +14,13 @@ pub fn main() !void {
     // Observers
     var printers = ArrayList(*Printer).init(allocator);
     defer {
-        for (printers.items) |x| x.deinit();
+        for (printers.items) |x| x.destroy();
         printers.deinit();
     }
 
     const stdin = std.io.getStdIn();
-    var stdin_stream = stdin.inStream();
-
-    while (stdin_stream.readUntilDelimiterAlloc(allocator, '\n', 1024)) |line| {
+    const reader = stdin.reader();
+    while (reader.readUntilDelimiterAlloc(allocator, '\n', 1024)) |line| {
         defer allocator.free(line);
 
         if (std.mem.eql(u8, "i", line)) {
@@ -29,11 +28,11 @@ pub fn main() !void {
             ctr.incr();
         } else if (std.mem.eql(u8, "a", line)) {
             // Add another observer
-            try printers.append(try Printer.init(&ctr, allocator));
+            try printers.append(try Printer.create(&ctr, allocator));
         } else if (std.mem.eql(u8, "d", line)) {
             // Remove an observer
             if (printers.items.len > 0) {
-                printers.orderedRemove(0).deinit();
+                printers.orderedRemove(0).destroy();
             }
         }
     } else |err| switch (err) {

@@ -33,7 +33,7 @@ pub const Observable = struct {
 
     pub fn detach(self: *Self, obs: *const Observer) void {
         if (std.mem.indexOfScalar(*const Observer, self.observers.items, obs)) |index| {
-            _ = self.observers.orderedRemove(index);
+            _ = self.observers.swapRemove(index);
         }
     }
 
