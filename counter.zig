@@ -11,7 +11,7 @@ pub const Counter = struct {
 
     const Self = @This();
 
-    pub fn init(allocator: *Allocator) Self {
+    pub fn init(allocator: Allocator) Self {
         return Self{
             .count = 0,
             .changed = Observable.init(allocator),

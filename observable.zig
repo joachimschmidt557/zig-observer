@@ -17,7 +17,7 @@ pub const Observable = struct {
 
     const Self = @This();
 
-    pub fn init(allocator: *Allocator) Self {
+    pub fn init(allocator: Allocator) Self {
         return Self{
             .observers = ArrayList(*const Observer).init(allocator),
         };

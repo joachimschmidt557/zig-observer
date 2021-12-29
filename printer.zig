@@ -7,13 +7,13 @@ const Observer = @import("observer.zig").Observer;
 /// An observer of a counter which prints the value of the counter when a
 /// notification arrives
 pub const Printer = struct {
-    allocator: *Allocator,
+    allocator: Allocator,
     counter: *Counter,
     observer: Observer,
 
     const Self = @This();
 
-    pub fn create(ctr: *Counter, alloc: *Allocator) !*Self {
+    pub fn create(ctr: *Counter, alloc: Allocator) !*Self {
         var self = try alloc.create(Self);
         self.* = Self{
             .allocator = alloc,
@@ -33,7 +33,7 @@ pub const Printer = struct {
     }
 
     pub fn print(self: Self) void {
-        std.debug.warn("value: {}\n", .{self.counter.count});
+        std.debug.print("value: {}\n", .{self.counter.count});
     }
 
     fn update(observer: *const Observer) void {
