@@ -8,7 +8,7 @@
 /// implementation ensures this by placing all Observer structs in heap memory
 /// only.
 pub const Observer = struct {
-    update: fn (self: *const Self) void,
+    update: *const fn (self: *const Self) void,
 
     const Self = @This();
 };
